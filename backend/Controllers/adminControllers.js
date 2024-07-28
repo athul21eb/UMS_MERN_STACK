@@ -53,7 +53,7 @@ const logoutAdmin = asyncHandler(async (req, res) => {
         expires: new Date(0),
     })
     res.status(200).json({
-        message: " user Logged Out successfully"
+        message: " Admin Logged Out successfully"
     });
 });
 
@@ -71,6 +71,8 @@ const updateUserDetails = asyncHandler(async (req, res) => {
         user.email = req.body.email || user.email;
         user.phone = req.body.phone || user.phone;
         user.photo = req.body.photo || user.photo;
+
+       
 
 
         await user.save();

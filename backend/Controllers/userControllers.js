@@ -126,10 +126,19 @@ const updateUserProfile = asyncHandler(async (req, res) => {
    
 });
 
+///* @desc Get user Refresh
+//// route => GET/api/users/refresh
+///? @access public - for  access token when expired
+const refresh = asyncHandler(async (req, res) => {
+    
+      res.status(200).json({message :"hi"});
+  });
+
 export {
     Auth,
     registerUser,
     logoutUser,
     getUserProfile,
     updateUserProfile,
+    refresh
 }

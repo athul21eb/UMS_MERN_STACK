@@ -1,23 +1,26 @@
 import React, { useState, } from 'react'
-import { Link } from 'react-router-dom';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+
+import { Form, Button, } from 'react-bootstrap';
 
 import FormContainer from '../../../components/USER/FormContainer/FormContainer'
-import { useRegisterMutation } from '../../../slices/user/usersApiSlice';
-import { SetCredentials } from '../../../slices/user/authSlice';
+
 import { toast } from 'react-toastify';
 import LoaderSpinner from '../../../components/USER/LoaderSpinner/Loader';
 import { useDispatch } from 'react-redux';
 import { RegistervalidateForm } from '../../../components/USER/validation/Validation';
-function UserRegisterScreen() {
+import { useAdminAddUserMutation } from '../../../slices/admin/adminApiSlice';
+import { useNavigate } from 'react-router-dom';
+
+function AdminAddUserPage() {
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone,setPhone] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [register,{isLoading}] = useRegisterMutation();
+   const [adminAddUser,{isloading} ] = useAdminAddUserMutation(); 
    
-const dispatch = useDispatch();
+const navigate= useNavigate();
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -27,10 +30,10 @@ const dispatch = useDispatch();
       }else{
         try {
           
-          const response = await register({ name,email,phone,password}).unwrap();
+          const response = await adminAddUser({ name,email,phone,password}).unwrap();
           
-          dispatch(SetCredentials({...response}));
-          navigate('/dashboard');
+       toast.success(response.message);
+          navigate('/admin/dashboard');
          
 
         } catch (err) {
@@ -40,7 +43,7 @@ const dispatch = useDispatch();
       }}
   return (
     <FormContainer>
-    <h1>Register</h1>
+    <h1>Add user</h1>
     <Form onSubmit={submitHandler}>
       <Form.Group className='my-2' controlId='name'>
         <Form.Label>Name</Form.Label>
@@ -94,20 +97,16 @@ const dispatch = useDispatch();
 
      
 
-{isLoading?(<LoaderSpinner/>): <Button type='submit' variant='primary' className='mt-3'>
-        Register
+{isloading?(<LoaderSpinner/>): <Button type='submit' variant='primary' className='mt-3'>
+        Add User
       </Button>}
 
   
     </Form>
     
-    <Row className='py-3'>
-      <Col>
-        Already have an account? <Link to={`/login`}>Login</Link>
-      </Col>
-    </Row>
+    
   </FormContainer>
   )
 }
 
-export default UserRegisterScreen
+export default AdminAddUserPage

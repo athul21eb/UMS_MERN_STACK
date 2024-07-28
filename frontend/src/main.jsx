@@ -18,28 +18,29 @@ import UserRegisterScreen from "./Screens/USER/UserRegister/UserRegisterScreen.j
 import Userdashboard from "./Screens/USER/Dashboard/Userdashboard.jsx";
 import UserProfileScreen from "./Screens/USER/Profile/UserProfileScreen.jsx";
 import RedirectingRoute from "./components/USER/RedirectingRoutes/RedirectionRoute.jsx";
+import AdminLoginPage from "./Screens/admin/adminLogin/adminLoginpage.jsx";
+import Admin from "./components/Admin/adminRouteWrapper/Admin.jsx";
+import AdminDashboard from "./Screens/admin/adminDashboard/adminDashboard.jsx";
+import AdminAddUserPage from "./Screens/admin/adminAddUserPage/AdminAddUserPage.jsx";
+import AdminEditUserPage from "./Screens/admin/adminEditUserPage/AdminEditPage.jsx";
 
 const router = createBrowserRouter(
-  
   createRoutesFromElements(
-
     <Route path="/" element={<App />}>
-
-      <Route path="" element={<RedirectingRoute />}>{/* redirecting to dashboard when user Logged In */}
-
-
-        <Route index={true} path="/" element={<Homepage />} />
-        <Route path="/login" element={<UserLoginScreen />} />
-        <Route path="/register" element={<UserRegisterScreen />} />
+      <Route element={<RedirectingRoute />}>
+        <Route index element={<Homepage />} />
+        <Route path="login" element={<UserLoginScreen />} />
+        <Route path="register" element={<UserRegisterScreen />} />
       </Route>
-
-    
-      <Route path="" element={<PrivateRoutes />}>  {/* private Routes */}
-
-      
-        <Route path="/dashboard" element={<Userdashboard />} />
-
-        <Route path="/profile" element={<UserProfileScreen />} />
+      <Route element={<PrivateRoutes />}>
+        <Route path="dashboard" element={<Userdashboard />} />
+        <Route path="profile" element={<UserProfileScreen />} />
+      </Route>
+      <Route path="admin" element={<Admin />}>
+        <Route index element={<AdminLoginPage />} />
+        <Route path="dashboard" element={<AdminDashboard/>} />
+        <Route path="addUser" element={<AdminAddUserPage/>} />
+        <Route path = "editUser/:id" element={<AdminEditUserPage/>} />
       </Route>
     </Route>
   )

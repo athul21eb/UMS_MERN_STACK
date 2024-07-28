@@ -1,5 +1,34 @@
 import { toast } from "react-toastify";
 
+export const editUservalidateForm = (name, email, phone) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\d{10,}$/;
+
+    if (!name||name.trim()==="") {
+        toast.error('Name is required');
+        return false;
+    }
+    if (!email) {
+        toast.error('Email is required');
+        return false;
+    }
+    if (!emailRegex.test(email)) {
+        toast.error('Invalid email format');
+        return false;
+    }
+    if (!phone) {
+        toast.error('Phone number is required');
+        return false;
+    }
+    if (!phoneRegex.test(phone)) {
+        toast.error('Phone number must be at least 10 digits');
+        return false;
+    }
+ 
+    
+    return true;
+};
+
 export const RegistervalidateForm = (name, email, phone, password, confirmPassword,Registerprofile=false) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^\d{10,}$/;

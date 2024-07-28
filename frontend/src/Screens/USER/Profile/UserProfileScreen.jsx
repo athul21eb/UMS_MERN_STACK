@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import Image from 'react-bootstrap/Image'
 import { Form, Button } from "react-bootstrap";
 
-import FormContainer from "../../../components/USER/FormContainer/FormContainer";
+import FormContainer from "../../../components/USER/FormContainer/FormContainer.jsx";
 import { useSelector } from "react-redux";
-import { SetCredentials } from "../../../slices/user/authSlice";
+import { SetCredentials } from "../../../slices/user/authSlice.js";
 import { toast } from "react-toastify";
-import LoaderSpinner from "../../../components/USER/LoaderSpinner/Loader";
+import LoaderSpinner from "../../../components/USER/LoaderSpinner/Loader.jsx";
 import { useDispatch } from "react-redux";
-import { useUpdateUserMutation } from "../../../slices/user/usersApiSlice";
+import { useUpdateUserMutation } from "../../../slices/user/usersApiSlice.js";
 import {productUpload} from '../../../firebase/firebase.js'
 import { RegistervalidateForm } from "../../../components/USER/validation/Validation.js";
 

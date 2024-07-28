@@ -1,30 +1,33 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import React, { useState,  } from "react";
+import {  useNavigate } from "react-router-dom";
+import { Form, Button,  } from "react-bootstrap";
 
 import FormContainer from "../../../components/USER/FormContainer/FormContainer";
-import { useLoginMutation } from "../../../slices/user/usersApiSlice";
-import { SetCredentials } from "../../../slices/user/authSlice";
+import { useAdminLoginMutation } from "../../../slices/admin/adminApiSlice";
+import { SetAdminCredentials } from "../../../slices/admin/adminauthSlice";
 import { toast } from "react-toastify";
 import LoaderSpinner from "../../../components/USER/LoaderSpinner/Loader";
 import { useDispatch } from "react-redux";
 import { LoginvalidateForm } from "../../../components/USER/validation/Validation";
-function UserLoginScreen() {
+
+
+
+function AdminLoginPage() {
   const [password, SetPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [login, { isLoading }] = useLoginMutation();
+  const [adminLogin, { isLoading }] = useAdminLoginMutation();
   const dispatch = useDispatch();
-
+const navigate = useNavigate();
   const submitHandler = async (e) => {
     e.preventDefault();
     if (!LoginvalidateForm(email, password)) {
       return;
     } else {
       try {
-        const response = await login({ email, password }).unwrap();
+        const response = await adminLogin({ email, password }).unwrap();
   
-        dispatch(SetCredentials({ ...response }));  
-        navigate("/dashboard");
+        dispatch(SetAdminCredentials({ ...response }));  
+        navigate("/admin/dashboard");
       } catch (error) {
         toast.error(error?.data?.message || error.error);
       }
@@ -35,7 +38,7 @@ function UserLoginScreen() {
 
   return (
     <FormContainer>
-      <h1>Sign In</h1>
+      <h1>Admin Sign In</h1>
 
       <Form onSubmit={submitHandler}>
         <Form.Group className="my-2" controlId="email">
@@ -57,21 +60,17 @@ function UserLoginScreen() {
             onChange={(e) => SetPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
-
-       
-      {isLoading ?<LoaderSpinner />: <Button type="submit" variant="primary" className="mt-3">
+        {isLoading? <LoaderSpinner />: <Button type="submit" variant="primary" className="mt-3">
           Sign In
         </Button>}
+       
       </Form>
 
+     
 
-      <Row className="py-3">
-        <Col>
-          New Customer? <Link to="/register">Register</Link>
-        </Col>
-      </Row>
+      
     </FormContainer>
   );
 }
 
-export default UserLoginScreen;
+export default AdminLoginPage;

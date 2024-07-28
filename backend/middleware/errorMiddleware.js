@@ -15,6 +15,10 @@ const errorHandler = (err,req,res,next)=>{
         statusCode = 404;
         message ='Resource not found';
     }
+    if(err.code===11000){
+        statusCode = 400;
+        message = 'Email already in use ';
+    }
 
     res.status(statusCode).json({
         message,
