@@ -1,17 +1,43 @@
 import jwt from "jsonwebtoken";
 
+////AccessToken
+export const generateAccessToken = ( user) => {
 
-const generateToken = (res, userId) => {
+   const accessToken = jwt.sign(
 
-    const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
-        expiresIn: "30d"
-    })
+    {
+        "userInfo":{
+            "username":user.name,
+                "email":user.email,
+                'userId':user._id  
+        }
+    },
+    process.env.ACCESS_TOKEN_SECRET,
+    {expiresIn :"10m"}
+   )
 
-    res.cookie('jwt',token,{
-        maxAge: 30*24*60*60*1000,
-        httpOnly:true,
-        sameSite:"strict",
-    },)
+   return accessToken;
 }
 
-export default generateToken
+
+////RefreshToken
+
+export const generateRefreshToken = (res,user) =>{
+    const refreshToken = jwt.sign(
+        {
+            "email":user.email,
+            'userId':user._id  
+        },
+    process.env.REFRESH_TOKEN_SECRET,
+    {expiresIn :"7d"}
+    
+       )
+    
+       res.cookie("jwt",refreshToken,{
+        httpOnly:true,
+        maxAge:24*60*60*1000,
+       
+        sameSite:"strict",
+       })
+}
+

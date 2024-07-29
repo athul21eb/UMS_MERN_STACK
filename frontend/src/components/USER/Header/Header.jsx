@@ -5,7 +5,7 @@ import {LinkContainer} from 'react-router-bootstrap'
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useLogoutMutation } from "../../../slices/user/usersApiSlice";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ClearCredentials } from "../../../slices/user/authSlice";
 import { toast } from "react-toastify";
 import {  useAdminLogoutMutation } from "../../../slices/admin/adminApiSlice";
@@ -17,13 +17,13 @@ function Header() {
   const dispatch = useDispatch();
   const {userInfo} = useSelector((state)=>state.auth);
 const {adminInfo} = useSelector(state=>state.adminAuth);
-
+const location = useLocation();
 const [adminLogout] = useAdminLogoutMutation();
   const logOutHandler = async() => {  
 
     try {
 const res = await logout().unwrap();
-dispatch(ClearCredentials());
+
 navigate('/');
 toast.success(res.message);
       
@@ -38,7 +38,7 @@ toast.success(res.message);
 
     try {
 const res = await adminLogout().unwrap();
-dispatch(ClearAdminCredentials());
+
 navigate('/admin');
 toast.success(res.message);
       
@@ -64,7 +64,11 @@ toast.success(res.message);
                 <NavDropdown.Item >Profile</NavDropdown.Item>
                 </LinkContainer>
               
-                <NavDropdown.Item onClick={logOutHandler}>Logout</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => {
+        if (window.confirm("Are you sure you want to logout?")) {
+          logOutHandler();
+        }
+    }}>Logout</NavDropdown.Item>
                
               </NavDropdown>)}
               
@@ -74,7 +78,12 @@ toast.success(res.message);
                 
                 <NavDropdown.Item >Add User</NavDropdown.Item>
                 </LinkContainer>
-                <NavDropdown.Item onClick={adminLogOutHandler}>Logout</NavDropdown.Item>
+                <NavDropdown.Item
+                onClick={() => {
+        if (window.confirm("Are you sure you want to logout?")) {
+            adminLogOutHandler();
+        }
+    }}>Logout</NavDropdown.Item>
                
               </NavDropdown>)}
               

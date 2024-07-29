@@ -1,23 +1,24 @@
 import { Router } from "express";
-
+import { verifyJWT } from "../middleware/verifyJWT.js";
 import { adminAuth ,
     getUsers,
     logoutAdmin ,
     updateUserDetails,
     deleteUser,
-    addUser
+    addUser,
+    refreshAdmin
 } from "../Controllers/adminControllers.js";
 
 const adminRouter = Router();
 
 adminRouter.post('/auth',adminAuth);
  
-adminRouter.get("/getUsers",getUsers);
-
+adminRouter.get("/getUsers",verifyJWT,getUsers);
+adminRouter.get('/refresh',refreshAdmin)
 adminRouter.post("/logout",logoutAdmin);
-adminRouter.put("/updateUser",updateUserDetails);
-adminRouter.put("/deleteUser",deleteUser);
-adminRouter.post("/addUser",addUser);
+adminRouter.put("/updateUser",verifyJWT,updateUserDetails);
+adminRouter.put("/deleteUser",verifyJWT,deleteUser);
+adminRouter.post("/addUser",verifyJWT,addUser);
 
 
 

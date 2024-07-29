@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import LoaderSpinner from '../../../components/USER/LoaderSpinner/Loader';
 import { useDispatch } from 'react-redux';
 import { RegistervalidateForm } from '../../../components/USER/validation/Validation';
+import useUserPersist from '../../../hooks/useUserPersist';
 function UserRegisterScreen() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -18,6 +19,13 @@ function UserRegisterScreen() {
     const [register,{isLoading}] = useRegisterMutation();
    
 const dispatch = useDispatch();
+
+
+
+const [Userpersist,setUserPersist] = useUserPersist();
+  const handlePersistToggle = () => setUserPersist((prev) => !prev);
+
+
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -91,6 +99,17 @@ const dispatch = useDispatch();
           onChange={(e) => setConfirmPassword(e.target.value)}
         ></Form.Control>
       </Form.Group>
+      <label htmlFor="persist">
+          <input
+            name="persist"
+            id="persist"
+            type="checkbox"
+            checked={Userpersist}
+            onChange={handlePersistToggle}
+          />
+          Trust This Device
+        </label>
+        <br></br>
 
      
 

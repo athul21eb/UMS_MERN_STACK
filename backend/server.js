@@ -6,6 +6,7 @@ import userRouter from './Routes/userRoutes.js';
 import connectMongoDB from './config/mongo_db.js';
 import cookieParser from 'cookie-parser';
 import adminRouter from './Routes/adminRoutes.js';
+import { refresh } from './Controllers/userControllers.js';
 dotenv.config();
 const PORT = process.env.PORT;
 connectMongoDB();
@@ -17,6 +18,7 @@ app.use(express.urlencoded({extended:true}));
 
 app.use('/api/users', userRouter);
 app.use('/api/admin', adminRouter);
+app.get('/api/tokenRefresh',refresh);
 app.get("/", (req, res) => {
     res.send("Server is ready");
 })

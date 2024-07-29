@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link,  useNavigate } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 
 import FormContainer from "../../../components/USER/FormContainer/FormContainer";
@@ -9,11 +9,19 @@ import { toast } from "react-toastify";
 import LoaderSpinner from "../../../components/USER/LoaderSpinner/Loader";
 import { useDispatch } from "react-redux";
 import { LoginvalidateForm } from "../../../components/USER/validation/Validation";
+import useUserPersist from "../../../hooks/useUserPersist";
+
+
+
+
 function UserLoginScreen() {
+
+
   const [password, SetPassword] = useState("");
   const [email, setEmail] = useState("");
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -22,7 +30,7 @@ function UserLoginScreen() {
     } else {
       try {
         const response = await login({ email, password }).unwrap();
-  
+  console.log(response);
         dispatch(SetCredentials({ ...response }));  
         navigate("/dashboard");
       } catch (error) {
@@ -32,6 +40,8 @@ function UserLoginScreen() {
 
     
   };
+ const [Userpersist,setUserPersist] = useUserPersist();
+  const handlePersistToggle = () => setUserPersist((prev) => !prev);
 
   return (
     <FormContainer>
@@ -57,7 +67,17 @@ function UserLoginScreen() {
             onChange={(e) => SetPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
-
+        <label htmlFor="persist">
+          <input
+            name="persist"
+            id="persist"
+            type="checkbox"
+            checked={Userpersist}
+            onChange={handlePersistToggle}
+          />
+          Trust This Device
+        </label>
+        <br></br>
        
       {isLoading ?<LoaderSpinner />: <Button type="submit" variant="primary" className="mt-3">
           Sign In

@@ -1,10 +1,10 @@
 import React from 'react'
 import { Navigate,Outlet } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-function RedirectingRoute() {
+function UserPrivateRoutes() {
 
     const {userInfo} = useSelector((state)=>state.auth) ;
-  return (!userInfo)?<Outlet/>:<Navigate to='/dashboard' replace/>
+  return userInfo?<Outlet/>:<Navigate to='/' replace/>
 }
 
-export default RedirectingRoute
+export default UserPrivateRoutes

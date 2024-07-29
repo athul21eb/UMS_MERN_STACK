@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler'
 import User from '../model/userModel.js';
-import generateToken from '../utils/generateJWT.js';
+import {generateAccessToken,generateRefreshToken} from '../utils/generateJWT.js';
+import jwt from 'jsonwebtoken'
 
 ///* @desc Auth admin/set token 
 //// route => POST/api/admin/auth
@@ -10,14 +11,15 @@ const adminAuth = asyncHandler(async (req, res) => {
     const user = await User.findOne({ email });
 
     if (user && (await user.matchPassword(password) && user.isAdmin)) {
-
-        generateToken(res, user._id);
+        const  accessToken  = generateAccessToken(user);
+        generateRefreshToken(res, user);
         res.status(201).json({
             id: user._id,
             name: user.name,
             email: user.email,
             phone: user.phone,
             photo: user.photo,
+            accessToken
         });
     } else {
         res.status(401);
@@ -142,7 +144,7 @@ const addUser = asyncHandler(async (req, res) => {
 
     if (createdUser) {
 
-        generateToken(res, createdUser._id);
+      
         res.status(201).json({
         createdUser,
             message:"User Created successfully"
@@ -159,8 +161,37 @@ const addUser = asyncHandler(async (req, res) => {
 
 
 
+///* @desc Get admin Refresh
+//// route => GET/api/admin/refresh
+///? @access public - for  access token when expired
+const refreshAdmin = asyncHandler(async (req, res) => {
+
+    const cookies = req.cookies
+
+
+    if (!cookies?.jwt) return res.status(401).json({ message: "Unauthorized" })
+
+    const refreshToken = cookies.jwt;
+    jwt.verify(
+        refreshToken,
+        process.env.REFRESH_TOKEN_SECRET,
+        asyncHandler(async (err, decoded) => {
+            if (err) return res.status(403).json({ message: "Forbidden " });
+
+            const foundUser = await User.findById({ _id: decoded.userId })
+
+            if (!foundUser) return res.status(401).json({ message: "Unauthorized " })
+
+
+            const  accessToken  = generateAccessToken(foundUser);
+            res.json({ accessToken });
+        })
+    )
 
 
 
+});
 
-export { adminAuth, getUsers, logoutAdmin, updateUserDetails, deleteUser,addUser }
+
+
+export { adminAuth, getUsers, logoutAdmin, updateUserDetails, deleteUser,addUser,refreshAdmin }

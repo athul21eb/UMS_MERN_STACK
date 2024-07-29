@@ -1,5 +1,6 @@
 
 import { apiSlice } from "../apiSlice";
+import { ClearCredentials, SetCredentials } from "./authSlice";
 
 const USER_URL = "/api/users";
 
@@ -11,14 +12,24 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 method: "POST",
                 body: data,
 
-            })
+            }),
         }),
         logout: builder.mutation({
             query: () => ({
                 url: `${USER_URL}/logout`,
                 method: "POST",
 
-            })
+            }),
+            async onQueryStarted(arg,{dispatch,queryFulfilled}){
+                try {
+                   const res =  await queryFulfilled;
+                   dispatch(ClearCredentials());
+                   dispatch(apiSlice.util.resetApiState())
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+            
         }),
          register : builder.mutation({
             query: (data) => ({
@@ -36,7 +47,24 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
             })
         }),
+        refresh:builder.mutation({
+            query:()=>({
+                url: `/api/tokenRefresh`,
+                method: "GET",
+            }),
+            async onQueryStarted(arg,{dispatch,queryFulfilled}){
+                try {
+                   const{data} =  await queryFulfilled;
+                   
+                   const {accessToken} = data;
+                   dispatch(SetCredentials({accessToken}));
+                   
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+        })
     })
 })
 
-export const { useLoginMutation, useLogoutMutation ,useRegisterMutation,useUpdateUserMutation} = userApiSlice;
+export const {useRefreshMutation, useLoginMutation, useLogoutMutation ,useRegisterMutation,useUpdateUserMutation} = userApiSlice;

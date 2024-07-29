@@ -7,18 +7,19 @@ import {
       refresh
 } from "../Controllers/userControllers.js";
 
-import { protect } from "../middleware/authMiddleware.js";
+
 
 import { Router } from "express"
+import { verifyJWT } from "../middleware/verifyJWT.js";
 const userRouter = Router();
 
 userRouter.post("/",registerUser);
 userRouter.post("/auth",Auth);
-userRouter.post('/refresh',refresh)
+userRouter.get('/refresh',refresh)
 
 userRouter.post("/logout",logoutUser);
-userRouter.get("/profile",protect,getUserProfile)
-            .put("/profile",protect,updateUserProfile);
+userRouter.get("/profile",verifyJWT,getUserProfile)
+            .put("/profile",verifyJWT,updateUserProfile);
 
 
 export default userRouter

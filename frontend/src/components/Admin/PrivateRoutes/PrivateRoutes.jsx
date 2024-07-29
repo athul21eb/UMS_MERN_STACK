@@ -3,8 +3,8 @@ import { Navigate,Outlet } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 function PrivateRoutes() {
 
-    const {userInfo} = useSelector((state)=>state.auth) ;
-  return userInfo?<Outlet/>:<Navigate to='/' replace/>
+    const {adminInfo} = useSelector((state)=>state.adminAuth) ;
+  return adminInfo?<Outlet/>:<Navigate to='/' replace/>
 }
 
 export default PrivateRoutes

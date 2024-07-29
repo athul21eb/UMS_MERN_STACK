@@ -24,13 +24,13 @@ function UserProfileScreen() {
   const [firebaseLoader,setFirebaseLoader] = useState(false);
 
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [updateUser, { isLoading}] = useUpdateUserMutation();
+  const [updateUser, { isLoading,isSuccess}] = useUpdateUserMutation();
   useEffect(() => {
     setName(userInfo.name ?? "");
     setEmail(userInfo.email ?? "");
     setPhone(userInfo.phone ?? "");
     setPhoto(userInfo.photo??"");
-  }, [userInfo.setName, userInfo.setEmail, userInfo.setPhone]);
+  }, [isSuccess]);
 
   const dispatch = useDispatch();
 
@@ -55,11 +55,12 @@ function UserProfileScreen() {
       return;
     } else {
       try {
-        setFirebaseLoader(true);
+        
         let url ='';
 if(updatedPhoto){
+  setFirebaseLoader(true);
    url =  await productUpload(updatedPhoto);
-
+   setFirebaseLoader(false);
   
 }
         
@@ -77,10 +78,10 @@ if(updatedPhoto){
 
         setPassword("");
         setConfirmPassword("");
-        setFirebaseLoader(false);
+      
         toast.success("Profile Details updated");
       } catch (errors) {
-        toast(errors?.data?.message || errors.error);
+        toast.error(errors?.data?.message || errors.error);
       }
     }
   };
