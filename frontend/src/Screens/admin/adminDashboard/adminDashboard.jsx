@@ -96,7 +96,7 @@ function AdminDashboard() {
         </Button>
       </Box>
 
-      <TableContainer component={Paper} sx={{ mt: 4, mx: 3 }}>
+      <TableContainer component={Paper} sx={{ mt: 4 }}>
         <Table sx={{ minWidth: 650, borderCollapse: "collapse" }} aria-label="simple table">
           <TableHead>
             <TableRow sx={{ backgroundColor: "#1976d2" }}>

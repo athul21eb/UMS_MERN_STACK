@@ -10,7 +10,7 @@ function App() {
     <Header/>
 
    <ToastContainer theme='dark' />
- <Container className='my-5'>
+ <Container className='my-5 mx-auto custom-form-container '>
    
  <Outlet/>
  

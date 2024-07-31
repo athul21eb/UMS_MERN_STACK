@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Nav, Container,NavDropdown} from "react-bootstrap";
+import { Navbar, Nav, Container,NavDropdown,} from "react-bootstrap";
 
 import {LinkContainer} from 'react-router-bootstrap'
 import { useSelector } from "react-redux";
@@ -10,6 +10,8 @@ import { ClearCredentials } from "../../../slices/user/authSlice";
 import { toast } from "react-toastify";
 import {  useAdminLogoutMutation } from "../../../slices/admin/adminApiSlice";
 import { ClearAdminCredentials } from "../../../slices/admin/adminauthSlice";
+import Button from '@mui/material/Button';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 function Header() {
 
   const [logout] = useLogoutMutation();
@@ -17,7 +19,7 @@ function Header() {
   const dispatch = useDispatch();
   const {userInfo} = useSelector((state)=>state.auth);
 const {adminInfo} = useSelector(state=>state.adminAuth);
-const location = useLocation();
+
 const [adminLogout] = useAdminLogoutMutation();
   const logOutHandler = async() => {  
 
@@ -53,7 +55,17 @@ toast.success(res.message);
   return (
     <header>
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
+      <Button
+          color="inherit"
+          variant="contained"
+          startIcon={<ArrowBackIcon />}
+          onClick={() => navigate(-1)}
+          sx={{ marginLeft:5 }}
+       / >
         <Container>
+     
+        
+      
           <Navbar.Brand href="/">UMS MERN APP</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse>

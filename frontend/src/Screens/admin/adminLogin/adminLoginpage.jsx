@@ -38,10 +38,13 @@ function AdminLoginPage() {
   const handlePersistToggle = () => setPersist((prev) => !prev);
 
   return (
-    <FormContainer>
+
+    
+    <FormContainer >
+      
       <h1>Admin Sign In</h1>
 
-      <Form onSubmit={submitHandler}>
+      <Form onSubmit={submitHandler} >
         <Form.Group className="my-2" controlId="email">
           <Form.Label>Email Address</Form.Label>
           <Form.Control
@@ -84,6 +87,7 @@ function AdminLoginPage() {
        </div>
       </Form>
     </FormContainer>
+ 
   );
 }
 

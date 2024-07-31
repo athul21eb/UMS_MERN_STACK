@@ -1,3 +1,11 @@
  body::-webkit-scrollbar{
     display: none;
  }
+
+ .custom-form-container {
+   background-color: hsl(0, 8%, 88%); /* Change this to your desired color */
+   padding: 20px; /* Optional: add padding for better spacing */
+   border-radius: 5px; /* Optional: add rounded corners */
+ }
+
+ 

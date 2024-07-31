@@ -20,7 +20,7 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithReAuth = async (args, api, extraOptions) => {
 
-    console.log(args) //request url,method,body
+    // console.log(args) //request url,method,body
     //console.log(api)  //signal,dispatch,getState()
     //console.log(extraOptions) //custom like {shout:true}
 
