@@ -3,13 +3,16 @@ import jwt from "jsonwebtoken";
 ////AccessToken
 export const generateAccessToken = ( user) => {
 
+    
+
    const accessToken = jwt.sign(
 
     {
         "userInfo":{
             "username":user.name,
                 "email":user.email,
-                'userId':user._id  
+                'userId':user._id  ,
+                "isAdmin":user.isAdmin,
         }
     },
     process.env.ACCESS_TOKEN_SECRET,
@@ -26,7 +29,8 @@ export const generateRefreshToken = (res,user) =>{
     const refreshToken = jwt.sign(
         {
             "email":user.email,
-            'userId':user._id  
+            'userId':user._id ,
+            "isAdmin":user.isAdmin,
         },
     process.env.REFRESH_TOKEN_SECRET,
     {expiresIn :"7d"}

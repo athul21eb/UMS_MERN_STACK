@@ -85,6 +85,8 @@ if(updatedPhoto){
       }
     }
   };
+
+   ////component
   return (
     <FormContainer>
 

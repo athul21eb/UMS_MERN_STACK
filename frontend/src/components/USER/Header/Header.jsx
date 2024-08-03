@@ -12,6 +12,8 @@ import {  useAdminLogoutMutation } from "../../../slices/admin/adminApiSlice";
 import { ClearAdminCredentials } from "../../../slices/admin/adminauthSlice";
 import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import usePersist from "../../../hooks/usePersist";
+import useUserPersist from "../../../hooks/useUserPersist";
 function Header() {
 
   const [logout] = useLogoutMutation();
@@ -19,16 +21,23 @@ function Header() {
   const dispatch = useDispatch();
   const {userInfo} = useSelector((state)=>state.auth);
 const {adminInfo} = useSelector(state=>state.adminAuth);
-
+const [persist,setPersist]= usePersist();
 const [adminLogout] = useAdminLogoutMutation();
+const [Userpersist,setUserPersist] = useUserPersist();
+
+
   const logOutHandler = async() => {  
 
     try {
+      setUserPersist(false) ;
 const res = await logout().unwrap();
 
+
+
 navigate('/');
+
 toast.success(res.message);
-      
+
 
     } catch (err) {
       console.log(err);
@@ -39,10 +48,15 @@ toast.success(res.message);
   const adminLogOutHandler = async() => {  
 
     try {
+
+      setPersist(false);
 const res = await adminLogout().unwrap();
+
+
 
 navigate('/admin');
 toast.success(res.message);
+
       
 
     } catch (err) {

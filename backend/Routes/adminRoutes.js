@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { verifyJWT } from "../middleware/verifyJWT.js";
+import { AdminVerifyJWT } from "../middleware/verifyJWT.js";
 import { adminAuth ,
     getUsers,
     logoutAdmin ,
@@ -13,12 +13,12 @@ const adminRouter = Router();
 
 adminRouter.post('/auth',adminAuth);
  
-adminRouter.get("/getUsers",verifyJWT,getUsers);
+adminRouter.get("/getUsers",AdminVerifyJWT,getUsers);
 adminRouter.get('/refresh',refreshAdmin)
 adminRouter.post("/logout",logoutAdmin);
-adminRouter.put("/updateUser",verifyJWT,updateUserDetails);
-adminRouter.put("/deleteUser",verifyJWT,deleteUser);
-adminRouter.post("/addUser",verifyJWT,addUser);
+adminRouter.put("/updateUser",AdminVerifyJWT,updateUserDetails);
+adminRouter.put("/deleteUser",AdminVerifyJWT,deleteUser);
+adminRouter.post("/addUser",AdminVerifyJWT,addUser);
 
 
 

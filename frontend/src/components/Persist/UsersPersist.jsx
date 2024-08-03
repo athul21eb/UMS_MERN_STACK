@@ -54,7 +54,10 @@ if(!Userpersist){ //UserPersist :no
    }else{
 
 dispatch(ClearCredentials());
+
+
     console.log("non UserPersist");
+
     content = <p>
         <h1> {error?.data?.message||"NO UserPersist data"}</h1>
    

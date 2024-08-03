@@ -46,6 +46,9 @@ const [Userpersist,setUserPersist] = useUserPersist();
           toast.error(err?.data?.message||err.error);
         }
       }}
+
+
+       ////component
   return (
     <FormContainer>
     <h1>Register</h1>

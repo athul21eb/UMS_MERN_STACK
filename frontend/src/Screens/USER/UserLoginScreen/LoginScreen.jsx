@@ -23,6 +23,9 @@ function UserLoginScreen() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [Userpersist,setUserPersist] = useUserPersist();
+  const handlePersistToggle = () => setUserPersist((prev) => !prev);
+
   const submitHandler = async (e) => {
     e.preventDefault();
     if (!LoginvalidateForm(email, password)) {
@@ -40,9 +43,11 @@ function UserLoginScreen() {
 
     
   };
- const [Userpersist,setUserPersist] = useUserPersist();
-  const handlePersistToggle = () => setUserPersist((prev) => !prev);
 
+ 
+
+
+  ////component
   return (
     <FormContainer>
       <h1>Sign In</h1>

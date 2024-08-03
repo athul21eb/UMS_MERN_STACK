@@ -51,7 +51,9 @@ import {
             <Route path="admin" element={<Admin />}>    {/* Admin Routes */}
              
               <Route element={<AdminRedirectingRoute />}> {/* Admin Redirection Routes */}
+
                 <Route index element={<AdminLoginPage />} />
+                
               </Route>
       
               
@@ -60,6 +62,7 @@ import {
                   <Route path="dashboard" element={<AdminDashboard />} />
                   <Route path="addUser" element={<AdminAddUserPage />} />
                   <Route path="editUser/:id" element={<AdminEditUserPage />} />
+
                 </Route>
               </Route>
             </Route>

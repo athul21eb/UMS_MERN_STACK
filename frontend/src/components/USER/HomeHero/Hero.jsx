@@ -6,7 +6,7 @@ const Hero = () => {
       <Container className='d-flex justify-content-center'>
         <Card className='p-5 d-flex flex-column align-items-center hero-card bg-light w-75'>
           <h1 className='text-center mb-4'>MERN UMS APP</h1>
-          <img src="./MERN.png" alt="MERN.Png" height='250px' width='678px'/>
+          <img src="./MERN.png" alt="MERN.Png" height='250px' width='678px' className='container-fluid'/>
           <div className='d-flex mt-5'>
             <LinkContainer to={'/login'}>
             <Button variant='primary'  className='me-3'>
