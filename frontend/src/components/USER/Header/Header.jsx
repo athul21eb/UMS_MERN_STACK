@@ -26,7 +26,7 @@ const [adminLogout] = useAdminLogoutMutation();
 const [Userpersist,setUserPersist] = useUserPersist();
 
 
-  const logOutHandler = async() => {  
+  const logOutHandler = async() => {
 
     try {
       setUserPersist(false) ;
@@ -43,9 +43,9 @@ toast.success(res.message);
       console.log(err);
 
     }
-    
+
   }
-  const adminLogOutHandler = async() => {  
+  const adminLogOutHandler = async() => {
 
     try {
 
@@ -57,18 +57,18 @@ const res = await adminLogout().unwrap();
 navigate('/admin');
 toast.success(res.message);
 
-      
+
 
     } catch (err) {
       console.log(err);
 
     }
-    
+
   }
 
   return (
     <header>
-      <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
+      <Navbar bg="dark" fixed="top" variant="dark" expand="lg" collapseOnSelect>
       <Button
           color="inherit"
           variant="contained"
@@ -77,31 +77,31 @@ toast.success(res.message);
           sx={{ marginLeft:5 }}
        / >
         <Container>
-     
-        
-      
+
+
+
           <Navbar.Brand href="/">UMS MERN APP</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse>
             <Nav className="ms-auto">
               {userInfo&&(<NavDropdown title={userInfo.name} >
                 <LinkContainer to="/profile">
-                
+
                 <NavDropdown.Item >Profile</NavDropdown.Item>
                 </LinkContainer>
-              
+
                 <NavDropdown.Item onClick={() => {
         if (window.confirm("Are you sure you want to logout?")) {
           logOutHandler();
         }
     }}>Logout</NavDropdown.Item>
-               
+
               </NavDropdown>)}
-              
+
               {adminInfo&&(<NavDropdown title={adminInfo.name} >
-              
+
                 <LinkContainer to="/admin/addUser">
-                
+
                 <NavDropdown.Item >Add User</NavDropdown.Item>
                 </LinkContainer>
                 <NavDropdown.Item
@@ -110,11 +110,11 @@ toast.success(res.message);
             adminLogOutHandler();
         }
     }}>Logout</NavDropdown.Item>
-               
+
               </NavDropdown>)}
-              
-              
-          
+
+
+
             </Nav>
           </Navbar.Collapse>
         </Container>

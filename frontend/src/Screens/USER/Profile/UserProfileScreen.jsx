@@ -44,7 +44,7 @@ function UserProfileScreen() {
       };
       reader.readAsDataURL(file);
 
-      
+
     }
   };
 
@@ -55,15 +55,15 @@ function UserProfileScreen() {
       return;
     } else {
       try {
-        
+
         let url ='';
 if(updatedPhoto){
   setFirebaseLoader(true);
    url =  await productUpload(updatedPhoto);
-   setFirebaseLoader(false);
-  
+
+
 }
-        
+
         const response = await updateUser({
           name,
           email,
@@ -72,16 +72,21 @@ if(updatedPhoto){
 
           password,
 
-          
+
         }).unwrap();
         dispatch(SetCredentials({ ...response }));
 
-        setPassword("");
-        setConfirmPassword("");
-      
+
+
         toast.success("Profile Details updated");
       } catch (errors) {
+        toast.error("unable to update profile");
         toast.error(errors?.data?.message || errors.error);
+      }
+      finally{
+        setPassword("");
+        setConfirmPassword("");
+        setFirebaseLoader(false);
       }
     }
   };
@@ -161,10 +166,10 @@ if(updatedPhoto){
         {(isLoading||firebaseLoader) ? <LoaderSpinner />: <Button type="submit" variant="primary" className="mt-3">
           Update
         </Button>}
-       
+
       </Form>
 
-     
+
     </FormContainer>
   );
 }

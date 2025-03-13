@@ -3,7 +3,7 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/
 
 //  app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyD7vNe_4V7W9QT_nOkguZh7lfDo3f7ICQE",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: "ums-mern-stack.firebaseapp.com",
   projectId: "ums-mern-stack",
   storageBucket: "ums-mern-stack.appspot.com",
@@ -27,7 +27,7 @@ export const productUpload = async (image) => {
     const url = await getDownloadURL(uploadTask.snapshot.ref);
     console.log(url);
     return url;
-    
+
   } catch (error) {
     console.error(error);
     toast.error(error.message);

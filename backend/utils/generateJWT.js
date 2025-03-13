@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 ////AccessToken
 export const generateAccessToken = ( user) => {
 
-    
+
 
    const accessToken = jwt.sign(
 
@@ -16,7 +16,7 @@ export const generateAccessToken = ( user) => {
         }
     },
     process.env.ACCESS_TOKEN_SECRET,
-    {expiresIn :"10m"}
+    {expiresIn :process.env.ACCESS_TOKEN_EXPIRED_IN}
    )
 
    return accessToken;
@@ -33,14 +33,14 @@ export const generateRefreshToken = (res,user) =>{
             "isAdmin":user.isAdmin,
         },
     process.env.REFRESH_TOKEN_SECRET,
-    {expiresIn :"7d"}
-    
+    {expiresIn :process.env.REFRESH_TOKEN_EXPIRED_IN}
+
        )
-    
+
        res.cookie("jwt",refreshToken,{
         httpOnly:true,
         maxAge:24*60*60*1000,
-       
+
         sameSite:"strict",
        })
 }
